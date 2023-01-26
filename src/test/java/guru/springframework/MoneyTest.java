@@ -4,9 +4,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MoneyTest {
 
+    @Test
+    void testReduceMoneyDifferentCurrencies(){
+        Bank bank= new Bank();
+        bank.addRate("CHF","USD",2);
+        Money result = bank.reduce(Money.franc(2),"USD");
+        assertEquals(Money.dollar(1),result);
+    }
+
+    @Test
+    void testIdentityRate(){
+        assertEquals(1,new Bank().rate("USD","USD"));
+        assertEquals(1,new Bank().rate("CHF","CHF"));
+    }
     @Test
     void testPlusReturnSum(){
         Money five = Money.dollar(5);
